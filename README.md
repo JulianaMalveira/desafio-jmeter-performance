@@ -54,9 +54,9 @@ Desafio Performance - API Pets (desafio_pets.jmx)
 
 As rotas `/pets` exigem a passagem de um token de autorização no formato `Bearer Token`. Como as variáveis em tempo de execução no JMeter possuem escopo limitado ao próprio Thread Group, foi implementado o padrão de propagação via propriedades globais:
 
-1. **`setUp Thread Group`**: Executado prioritariamente antes dos demais grupos para realizar a chamada `POST /login` com o payload:
+1. **`setUp Thread Group`**: Executado prioritariamente antes dos demais grupos para realizar a chamada `POST /login` com as credenciais de teste configuradas na API (`tiagotaq/api-de-pets`):
    ```json
-   {"username": "tiago", "password": "123456"}
+   {"username": "<usuario>", "password": "<senha>"}
    ```
 2. **`JSON Extractor`**: Extrai o campo `token` da resposta JSON através da expressão `$.token` e armazena na variável local `tokenExtraido`.
 3. **`JSR223 PostProcessor` (Groovy)**: Converte a variável local em uma propriedade global do JMeter acessível por qualquer Thread Group do plano:
